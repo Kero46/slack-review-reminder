@@ -10,8 +10,8 @@ import { ReviewDailyWorkflow } from "./workflows/review_daily_wf.ts";
 import { ConfigDatastore } from "./datastores/config.ts";
 
 export default Manifest({
-  name: "algo-review",
-  description: "忘却曲線リマインド（自動セットアップ版）",
+  name: "slack-review-reminder",
+  description: "Forgetting-curve review reminders in Slack (1/3/7/30 days)",
   functions: [SetupFunction, AddProblemFunction, ApplyResultFunction, ReviewDailyFunction],
   workflows: [SetupWorkflow, AddProblemWorkflow, ApplyResultWorkflow, ReviewDailyWorkflow],
   datastores: [ConfigDatastore],
