@@ -35,8 +35,18 @@ type Col = { key?: string; id?: string; column_id?: string };
 export default SlackFunction(SetupFunction, async ({ inputs, client }) => {
   const channel = inputs.channel;
 
-  // 1. bot を通知チャンネルに参加させる（投稿に必要）
-  await client.conversations.join({ channel });
+  // 1. bot を通知チャンネルに参加させる（パブリックのみ自動で可）
+  const joined = await client.conversations.join({ channel });
+  if (!joined.ok) {
+    // プライベートチャンネルは API で参加できないため手動追加を案内
+    await client.chat.postMessage({
+      channel,
+      text:
+        `このチャンネルにアプリを自動追加できませんでした（${joined.error}）。\n` +
+        `プライベートチャンネルの場合は、チャンネル名をクリック →「インテグレーション」→「アプリを追加する」から ` +
+        `このアプリを追加するか、メッセージ欄で /invite を実行してから、もう一度初期化してください。`,
+    }).catch(() => {});
+  }
 
   // 2. List 生成
   const created = await client.apiCall("slackLists.create", {
