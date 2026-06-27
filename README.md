@@ -94,8 +94,13 @@ slack trigger create --trigger-def triggers/test_daily.ts   # manual test (optio
 ```
 
 ## Usage
+> **Private channel?** Add this app to the channel **before** running setup
+> (channel name → Integrations → Add an App, or `/invite @<app name>` in the channel).
+> Slack does not allow apps to join private channels via API, so this one step is manual.
+> Public channels need no manual step — the app joins automatically.
+
 1. Run the **"Initialize review system"** link → pick the notification channel in the form.
-   The list is created, shared to that channel, and the bot joins the channel.
+   The list is created, shared to that channel, and (for public channels) the bot joins.
 2. Use the **"Add a problem"** link to register a problem
    (problem number / url / first result / base date).
 3. Each morning at 9:00 the due problems are posted with buttons.
