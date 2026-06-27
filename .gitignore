@@ -1,0 +1,7 @@
+# Slack CLI のローカル状態（環境ごとに異なる・コミットしない）
+.slack/
+# Deno
+deno.lock
+# OS
+.DS_Store
+*.log
