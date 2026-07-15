@@ -28,10 +28,11 @@ export default SlackFunction(ReviewDailyFunction, async ({ client }) => {
     return { completed: true, outputs: {} };
   }
   const items = (list.items ?? []) as Item[];
-  const due = items.filter((it) =>
-    readDate(it, cfg, KEY.due_date) === today &&
-    readSelectValue(it, cfg, KEY.status) === STATUS.active
-  );
+  const due = items.filter((it) => {
+  const d = readDate(it, cfg, KEY.due_date);
+  return d !== "" && d <= today &&
+    readSelectValue(it, cfg, KEY.status) === STATUS.active;
+});
 
   if (!cfg.trigger_url) {
     await client.chat.postMessage({
